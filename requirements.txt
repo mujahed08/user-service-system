@@ -1,0 +1,6 @@
+pytest
+aerich
+tortoise-orm
+tortoise-orm[aiomysql]
+pydantic
+fastapi
