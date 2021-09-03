@@ -11,7 +11,7 @@ services:
     depends_on:
       - mvpuser_db
 
-  mysql:
+  mvpuser_db:
     image: mysql:5.7
     volumes:
       - mvpuser-mysql-data:/var/lib/mysql
