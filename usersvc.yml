@@ -13,7 +13,6 @@ services:
 
   mvpuser_db:
     image: mysql:5.7
-    restart: always
     volumes:
       - mvpuser-mysql-data:/var/lib/mysql
     environment:
