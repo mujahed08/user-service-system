@@ -23,7 +23,7 @@ logger.info('   Registring Tortoise ORM with Fast API app')
 
 register_tortoise(
     app,
-    db_url="mysql://root:rxpad@127.0.0.1:3306/mvpuser",
+    db_url="mysql://root:rxpad@mvpuser_db:3306/mvpuser",
     modules={"models": ["USER_SERVICE_SYSTEM.domain.models"]},
     generate_schemas=False,
     add_exception_handlers=True,

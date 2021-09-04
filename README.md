@@ -10,7 +10,7 @@ Follwing are end points:
 Tortoise Database migration with aerich
 Follwing are steps to create database schema
 1. navigate to project root directory i.e. user-service-system
-2. >aerich init -t USER_SERVICE_SYSTEM.tortoise.settings.TORTOISE_ORM
+2. >aerich init -t USER_SERVICE_SYSTEM.tortoise_orm.settings.TORTOISE_ORM
 Success create migrate location ./migrations
 Success generate config file aerich.ini
 3. aerich init-db
