@@ -27,5 +27,11 @@ services:
     depends_on:
       - mvpuser_db
 
+  demo:
+    build: ./demo
+    command: java -jar demo.jar
+    ports:
+      - 8080:8080
+      
 volumes:
   mvpuser-mysql-data:
