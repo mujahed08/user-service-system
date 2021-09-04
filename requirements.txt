@@ -1,8 +1,8 @@
-pytest
-aerich
-tortoise-orm
+pytest==6.2.4
+aerich==0.5.8
+tortoise-orm==0.17.7
 tortoise-orm[aiomysql]
-pydantic
-fastapi
-uvicorn
-PyYAML
+pydantic==1.8.2
+fastapi==0.68.1
+uvicorn==0.15.0
+PyYAML==5.4.1
