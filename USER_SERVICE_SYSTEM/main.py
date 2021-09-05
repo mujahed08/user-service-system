@@ -2,7 +2,7 @@
 Tortoise ORM FastAPI
 """
 
-from USER_SERVICE_SYSTEM.pydantic.holders import UserRoleOps
+import os
 from typing import List
 from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
@@ -11,9 +11,13 @@ from tortoise.contrib.fastapi import HTTPNotFoundError, register_tortoise
 from USER_SERVICE_SYSTEM.domain.models import RoleIn_Pydantic, RoleSer_Pydantic, Role_Pydantic, Role 
 from USER_SERVICE_SYSTEM.domain.models import UserIn_Pydantic, User_Pydantic, User
 from USER_SERVICE_SYSTEM.commons.logger import get_logger
+from USER_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
+from USER_SERVICE_SYSTEM.pydantic_models.holders import UserRoleOps
+
+run_env:str = os.environ['RUN_ENV']
+settings = Settings(_env_file=f'{run_env}.env', _env_file_encoding='utf-8')
 
 logger = get_logger('main.py')
-logger.info(UserIn_Pydantic.schema_json())
 
 logger.info('   Initiliazing Fast API app with Tortoise ORM  support')
 app = FastAPI(title="Tortoise ORM FastAPI")
@@ -23,13 +27,11 @@ logger.info('   Registring Tortoise ORM with Fast API app')
 
 register_tortoise(
     app,
-    db_url="mysql://root:rxpad@mvpuser_db:3306/mvpuser",
+    db_url=f'mysql://root:{settings.mysql_root_password}@{settings.mysql_host}:3306/{settings.mysql_database}',
     modules={"models": ["USER_SERVICE_SYSTEM.domain.models"]},
     generate_schemas=False,
     add_exception_handlers=True,
 )
-    
-logger.info('   Tortoise ORM has been registered')
 
 class Status(BaseModel):
     message: str

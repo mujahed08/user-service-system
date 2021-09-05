@@ -1,14 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from USER_SERVICE_SYSTEM.domain.models import RoleIn_Pydantic, UserIn_Pydantic
-
-"""
-class User_Role(BaseModel):
-    user_id: int
-    role:str
-
-"""
+from USER_SERVICE_SYSTEM.domain.models import UserIn_Pydantic
 
 class RoleOps(BaseModel):
     id:int

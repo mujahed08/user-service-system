@@ -9,10 +9,13 @@
             "type": "python",
             "request": "launch",
             "module": "uvicorn",
+            "env": {"RUN_ENV" : "dev"},
             "args": [
                 "USER_SERVICE_SYSTEM.main:app",
                 "--log-config",
-                "log4py.yaml"
+                "log4py.yaml",
+                "--port",
+                "7001"
             ],
             "jinja": true,
             "port": 8001
