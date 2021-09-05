@@ -19,6 +19,8 @@ services:
     links:
       - mvpuser_db
     build: ./user-service-system
+    environment:
+      - RUN_ENV=sit
     command: uvicorn USER_SERVICE_SYSTEM.main:app --host 0.0.0.0 --port 8000
     volumes:
       - ./user-service-system/:/dist/
