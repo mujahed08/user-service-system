@@ -48,12 +48,12 @@ services:
       - demo
 
   user_svc_prc:
-    build: ./user_service_process
+    build: ./user-service-process
     environment:
       - RUN_ENV=sit
     command: uvicorn USER_SERVICE_PROCESS.main:app --host 0.0.0.0 --port 8001
     volumes:
-      - ./user_service_process/:/dist/
+      - ./user-service-process/:/dist/
     ports:
       - 8001:8001
     depends_on:
@@ -61,12 +61,12 @@ services:
       - producer
 
   user_svc:
-    build: ./user_service
+    build: ./user-service
     environment:
       - RUN_ENV=sit
     command: uvicorn USER_SERVICE.main:app --host 0.0.0.0 --port 8003
     volumes:
-      - ./user_service/:/dist/
+      - ./user-service/:/dist/
     ports:
       - 8003:8003
     depends_on:
