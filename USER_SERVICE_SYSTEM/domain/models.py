@@ -26,3 +26,5 @@ RoleSer_Pydantic = pydantic_model_creator(Role, name="RoleSer", include=['id', '
 RoleIn_Pydantic = pydantic_model_creator(Role, name="RoleIn", exclude_readonly=True)
 UserIn_Pydantic = pydantic_model_creator(User, name="UserIn", exclude_readonly=True)
 User_Pydantic = pydantic_model_creator(User, name="User", exclude=['password'])
+UserUp_Pydantic = pydantic_model_creator(User, name="UserUp", exclude=['password', 'username'],
+    exclude_readonly=True)

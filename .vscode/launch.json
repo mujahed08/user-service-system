@@ -15,10 +15,10 @@
                 "--log-config",
                 "log4py.yaml",
                 "--port",
-                "7001"
+                "8000"
             ],
             "jinja": true,
-            "port": 8001
+            "port": 8000
         }
     ]
 }

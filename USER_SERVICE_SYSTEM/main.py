@@ -9,7 +9,7 @@ from fastapi import FastAPI, HTTPException
 from tortoise.contrib.fastapi import HTTPNotFoundError, register_tortoise
 
 from USER_SERVICE_SYSTEM.domain.models import RoleIn_Pydantic, RoleSer_Pydantic, Role_Pydantic, Role 
-from USER_SERVICE_SYSTEM.domain.models import UserIn_Pydantic, User_Pydantic, User
+from USER_SERVICE_SYSTEM.domain.models import UserIn_Pydantic, User_Pydantic, User, UserUp_Pydantic
 from USER_SERVICE_SYSTEM.commons.logger import get_logger
 from USER_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
 from USER_SERVICE_SYSTEM.pydantic_models.holders import UserRoleOps
@@ -60,7 +60,7 @@ async def get_user(user_id: int):
 
 @app.put("/users/{user_id}", response_model=User_Pydantic, 
 responses={404: {"model": HTTPNotFoundError}})
-async def update_user(user_id: int, user: UserIn_Pydantic):
+async def update_user(user_id: int, user: UserUp_Pydantic):
     logger.info('<<< update_user function is executing >>>')
     await User.filter(id=user_id).update(**user.dict(exclude_unset=True))
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
