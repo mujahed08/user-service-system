@@ -83,5 +83,12 @@ services:
     ports:
       - "8003:8003"
 
+  reverse-proxy:
+    image: nginx:latest
+    volumes:
+      - ./reverse-proxy/proxy.conf:/etc/nginx/conf.d/default.conf:ro
+    ports:
+      - "8009:8009"
+
 volumes:
   mvpuser-mysql-data:
