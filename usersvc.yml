@@ -89,6 +89,8 @@ services:
       - ./reverse-proxy/proxy.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
       - "8009:8009"
+    depends_on:
+      - user_svc
 
 volumes:
   mvpuser-mysql-data:
