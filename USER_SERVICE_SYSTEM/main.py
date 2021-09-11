@@ -8,7 +8,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI, HTTPException
 from tortoise.contrib.fastapi import HTTPNotFoundError, register_tortoise
 
-from USER_SERVICE_SYSTEM.domain.models import RoleIn_Pydantic, RoleSer_Pydantic, Role_Pydantic, Role 
+from USER_SERVICE_SYSTEM.domain.models import RoleIn_Pydantic, RoleSer_Pydantic, Role_Pydantic, Role
 from USER_SERVICE_SYSTEM.domain.models import UserIn_Pydantic, User_Pydantic, User, UserUp_Pydantic
 from USER_SERVICE_SYSTEM.commons.logger import get_logger
 from USER_SERVICE_SYSTEM.pydantic_models.enviornment import Settings
@@ -37,13 +37,13 @@ class Status(BaseModel):
     message: str
 
 
-@app.get("/users", response_model=List[User_Pydantic])
+@app.get("/user-service-system/users", response_model=List[User_Pydantic])
 async def get_users():
     logger.info('   get_users function is executing')
     return await User_Pydantic.from_queryset(User.all())
 
 
-@app.post("/users", response_model=User_Pydantic)
+@app.post("/user-service-system/users", response_model=User_Pydantic)
 async def create_user(user: UserIn_Pydantic):
     logger.info(user)
     logger.info('   create_user function is executing')
@@ -51,14 +51,14 @@ async def create_user(user: UserIn_Pydantic):
     return await User_Pydantic.from_tortoise_orm(user_obj)
 
 
-@app.get("/users/{user_id}", response_model=User_Pydantic,
+@app.get("/user-service-system/users/{user_id}", response_model=User_Pydantic,
 responses={404: {"model": HTTPNotFoundError}})
 async def get_user(user_id: int):
     logger.info('   get_user function is executing')
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
 
-@app.put("/users/{user_id}", response_model=User_Pydantic, 
+@app.put("/user-service-system/users/{user_id}", response_model=User_Pydantic,
 responses={404: {"model": HTTPNotFoundError}})
 async def update_user(user_id: int, user: UserUp_Pydantic):
     logger.info('<<< update_user function is executing >>>')
@@ -66,7 +66,7 @@ async def update_user(user_id: int, user: UserUp_Pydantic):
     return await User_Pydantic.from_queryset_single(User.get(id=user_id))
 
 
-@app.delete("/users/{user_id}", response_model=Status, responses={404: {"model": HTTPNotFoundError}})
+@app.delete("/user-service-system/users/{user_id}", response_model=Status, responses={404: {"model": HTTPNotFoundError}})
 async def delete_user(user_id: int):
     logger.info('   delete_user function is executing')
     deleted_count = await User.filter(id=user_id).delete()
@@ -75,20 +75,20 @@ async def delete_user(user_id: int):
     logger.info('   deleted_count: %d', deleted_count)
     return Status(message=f'Deleted user {user_id}')
 
-@app.post("/roles", response_model=Role_Pydantic)
+@app.post("/user-service-system/roles", response_model=Role_Pydantic)
 async def create_role(role_py: Role_Pydantic):
     logger.info('   create_role function is executing')
     role = await Role.create(**role_py.dict(exclude_unset=True))
     return await Role_Pydantic.from_tortoise_orm(role)
 
-@app.put("/roles/{role_id}", response_model=Role_Pydantic, 
+@app.put("/user-service-system/roles/{role_id}", response_model=Role_Pydantic,
 responses={404: {"model": HTTPNotFoundError}})
 async def update_role(role_id: int, role_py: RoleIn_Pydantic):
     logger.info('   update_role function is executing')
     await Role.filter(id=role_id).update(**role_py.dict(exclude_unset=True))
     return await Role_Pydantic.from_queryset_single(Role.get(id=role_id))
 
-@app.delete("/roles/{role_id}", response_model=Status, responses={404: {"model": HTTPNotFoundError}})
+@app.delete("/user-service-system/roles/{role_id}", response_model=Status, responses={404: {"model": HTTPNotFoundError}})
 async def delete_role(role_id: int):
     logger.info('   delete_role function is executing')
     deleted_count = await Role.filter(id=role_id).delete()
@@ -97,7 +97,7 @@ async def delete_role(role_id: int):
     logger.info('   deleted_count: %d', deleted_count)
     return Status(message=f'Deleted user {role_id}')
 
-@app.post("/users/{user_id}/roles", response_model=Status)
+@app.post("/user-service-system/users/{user_id}/roles", response_model=Status)
 async def assign_roles(user_id:int, names: List[str]):
     logger.info('   assign_roles function is executing')
     logger.info(names)
@@ -108,7 +108,7 @@ async def assign_roles(user_id:int, names: List[str]):
     logger.info('   roles added')
     return Status(message=f'Added roles {names} to user {user.username}')
 
-@app.delete("/users/{user_id}/roles", response_model=Status)
+@app.delete("/user-service-system/users/{user_id}/roles", response_model=Status)
 async def remove_roles(user_id: int, names: List[str]):
     logger.info('   remove_roles function is executing')
     logger.info(names)
@@ -118,7 +118,7 @@ async def remove_roles(user_id: int, names: List[str]):
     logger.info('   roles removed %s', names)
     return Status(message=f'Removed roles {names} from user {user.username}')
 
-@app.post("/roles/ops", response_model=User_Pydantic,
+@app.post("/user-service-system/roles/ops", response_model=User_Pydantic,
 responses={404: {"model": HTTPNotFoundError}})
 async def roles_ops(user_role:UserRoleOps):
     logger.info('   roles_ops function is executing')

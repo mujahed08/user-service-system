@@ -21,11 +21,11 @@ services:
     build: ./user-service-system
     environment:
       - RUN_ENV=sit
-    command: uvicorn USER_SERVICE_SYSTEM.main:app --host 0.0.0.0 --port 8000
+    command: uvicorn USER_SERVICE_SYSTEM.main:app --host 0.0.0.0 --port 8010
     volumes:
       - ./user-service-system/:/dist/
     ports:
-      - 8000:8000
+      - 8010:8010
     depends_on:
       - mvpuser_db
 
@@ -39,11 +39,11 @@ services:
     build: ./producer
     environment:
       - RUN_ENV=sit
-    command: uvicorn PRODUCER.main:app --host 0.0.0.0 --port 8002
+    command: uvicorn PRODUCER.main:app --host 0.0.0.0 --port 8011
     volumes:
       - ./producer/:/dist/
     ports:
-      - 8002:8002
+      - 8011:8011
     depends_on:
       - demo
 
@@ -51,11 +51,11 @@ services:
     build: ./user-service-process
     environment:
       - RUN_ENV=sit
-    command: uvicorn USER_SERVICE_PROCESS.main:app --host 0.0.0.0 --port 8001
+    command: uvicorn USER_SERVICE_PROCESS.main:app --host 0.0.0.0 --port 8009
     volumes:
       - ./user-service-process/:/dist/
     ports:
-      - 8001:8001
+      - 8009:8009
     depends_on:
       - user_svc_sys
       - producer
@@ -88,7 +88,7 @@ services:
     volumes:
       - ./reverse-proxy/proxy.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "8009:8009"
+      - "80:80"
     depends_on:
       - user_svc
 
