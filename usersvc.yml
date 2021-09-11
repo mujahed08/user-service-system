@@ -91,6 +91,9 @@ services:
       - "80:80"
     depends_on:
       - user_svc
+      - user_svc_prc
+      - user_svc_sys
+      - producer
 
 volumes:
   mvpuser-mysql-data:
