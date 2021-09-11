@@ -69,6 +69,8 @@ services:
       - ./user-service/:/dist/
     expose:
       - 8008
+    deploy:
+      replicas : 2
     depends_on:
       - user_svc_prc
 
