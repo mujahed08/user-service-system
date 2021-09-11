@@ -64,13 +64,22 @@ services:
     build: ./user-service
     environment:
       - RUN_ENV=sit
-    command: uvicorn USER_SERVICE.main:app --host 0.0.0.0 --port 8003
+    command: uvicorn USER_SERVICE.main:app --host 0.0.0.0 --port 8008
     volumes:
       - ./user-service/:/dist/
-    ports:
-      - 8003:8003
+    expose:
+      - 8008
     depends_on:
       - user_svc_prc
+
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx-docker/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - user_svc
+    ports:
+      - "8003:8003"
 
 volumes:
   mvpuser-mysql-data:
